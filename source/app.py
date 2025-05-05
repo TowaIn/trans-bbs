@@ -37,9 +37,11 @@ def nl2br(value):
 # Jinja2 環境にカスタムフィルタを登録
 app.jinja_env.filters['nl2br'] = nl2br
 
-# --- Pygments Formatter (ハイライト済みHTML生成用) ---
-# 行番号を表示(linenos), ラッパーdivにクラス名を指定(cssclass), カラースキームを指定(style)
+# --- Pygments Formatter と CSS 生成 ---
+# HtmlFormatter を作成 (linenos=Trueで行番号表示, cssclassでラッパーdivのクラス名指定, styleでカラースキーム指定)
 pygments_formatter = HtmlFormatter(linenos=True, cssclass="codehilite", style='default')
+# CSS定義を取得 (テンプレートで <style> タグ内に埋め込む用)
+pygments_css = pygments_formatter.get_style_defs('.codehilite')
 
 
 # --- ログイン必須をチェックするデコレータ ---
@@ -59,11 +61,11 @@ def login_required(f):
 
 # 掲示板トップページ (閲覧はログイン不要)
 @app.route('/')
-# @login_required # デコレータを削除したので誰でもアクセス可能
+# @login_required # デコレータは適用しない
 def index():
     """投稿一覧を表示する"""
-    # Pygments CSS が外部ファイルの場合はここで渡す必要なし
-    return render_template('index.html', posts=reversed(posts))
+    # Pygments の CSS 文字列をテンプレートに渡す
+    return render_template('index.html', posts=reversed(posts), pygments_css=pygments_css)
 
 # 投稿処理 (書き込みはログイン必須)
 @app.route('/post', methods=['POST'])
@@ -103,41 +105,29 @@ def post():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """ログイン処理を行う"""
-    # すでにログイン済みならトップページへリダイレクト
     if session.get('logged_in'):
         return redirect(url_for('index'))
-
-    # POSTリクエスト（フォームが送信された）の場合
     if request.method == 'POST':
         password_attempt = request.form.get('password')
-        # 設定したパスワードと一致するか検証
         if password_attempt == BBS_PASSWORD:
-            # 一致したらセッションにログイン済みフラグを立てる
             session['logged_in'] = True
             flash('ログインしました。', 'success')
-            # next パラメータがあればそこへ、なければトップページへ
             next_url = request.args.get('next')
             return redirect(next_url or url_for('index'))
         else:
-            # パスワードが間違っていたらエラーメッセージを表示
             flash('パスワードが間違っています。', 'danger')
-
-    # GETリクエストまたは認証失敗時はログインフォームを表示
     return render_template('login.html')
 
 # ログアウト処理
 @app.route('/logout')
 def logout():
     """ログアウト処理を行う"""
-    # セッションからログイン情報を削除
     session.pop('logged_in', None)
     flash('ログアウトしました。', 'info')
-    # ログインページへリダイレクト
     return redirect(url_for('login'))
 
 
 # スクリプトとして直接実行された場合
 if __name__ == '__main__':
     # Flask 開発サーバーを起動
-    # debug=True は開発時のみ。本番環境では Gunicorn などを使う。
     app.run(host='0.0.0.0', port=5000, debug=True)
