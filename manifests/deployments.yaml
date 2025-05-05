@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: trans-bbs-container
-        image: trans-bbs:v1
+        image: trans-bbs:v2
         imagePullPolicy: Never
         ports:
         - containerPort: 5000
