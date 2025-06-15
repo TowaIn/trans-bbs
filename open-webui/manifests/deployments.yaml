@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open-webui-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: open-webui
+  template:
+    metadata:
+      labels:
+        app: open-webui
+    spec:
+      containers:
+      - name: open-webui
+        # 公式のコンテナイメージを指定
+        image: ghcr.io/open-webui/open-webui:main
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: open-webui-config

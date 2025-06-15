@@ -6,7 +6,8 @@ spec:
   selector:
     app: trans-bbs
   ports:
-    - protocol: TCP
-      port: 5000
-      targetPort: 5000
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+    NodePort: 32208
   type: NodePort
