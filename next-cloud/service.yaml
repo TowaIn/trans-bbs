@@ -1,0 +1,16 @@
+# NextCloudのサービス
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud-svc
+  labels:
+    app: nextcloud
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    NodePort: 32162
+  selector:
+    app: nextcloud
+  type: NodePort

@@ -1,0 +1,44 @@
+# NextCloudのデプロイメント
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud-deploy
+  labels:
+    app: nextcloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextcloud
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      containers:
+      - name: nextcloud
+        image: nextcloud:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nextcloud-data
+          mountPath: /var/www/html/data
+        - name: nextcloud-config
+          mountPath: /var/www/html/config
+        - name: nextcloud-apps
+          mountPath: /var/www/html/apps
+        - name: nextcloud-themes
+          mountPath: /var/www/html/themes
+      volumes:
+      - name: nextcloud-data
+        persistentVolumeClaim:
+          claimName: nextcloud-data
+      - name: nextcloud-config
+        persistentVolumeClaim:
+          claimName: nextcloud-config
+      - name: nextcloud-apps
+        persistentVolumeClaim:
+          claimName: nextcloud-apps
+      - name: nextcloud-themes
+        persistentVolumeClaim:
+          claimName: nextcloud-themes
