@@ -28,9 +28,6 @@ spec:
           mountPath: /var/www/html/apps
         - name: nextcloud-themes
           mountPath: /var/www/html/themes
-        - name: nextcloud-settings
-          mountPath: /var/www/html/config/config.php
-          subPath: config.php
       volumes:
       - name: nextcloud-data
         persistentVolumeClaim:
@@ -44,6 +41,3 @@ spec:
       - name: nextcloud-themes
         persistentVolumeClaim:
           claimName: nextcloud-themes
-      - name: nextcloud-settings
-        configMap:
-          name: nextcloud-settings
