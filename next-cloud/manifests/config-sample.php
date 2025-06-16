@@ -18,16 +18,16 @@ $CONFIG = array (
     ),
   ),
   'upgrade.disable-web' => true,
-  'instanceid' => 'oc4y6lfid4gk',
-  'passwordsalt' => 'yjqDQO4vG18/ETvWVKLiKFOSz1wwD2',
-  'secret' => 'KL4mKhGzgseKWaQrAx21PvXlscyP5sBbokpL1vDVMf53TE9c',
+  'instanceid' => 'xxx',
+  'passwordsalt' => 'xxx',
+  'secret' => 'xxx',
   'trusted_domains' => 
   array (
     0 => '*',
   ),
   'datadirectory' => '/var/www/html/data',
   'dbtype' => 'sqlite3',
-  'version' => '31.0.6.2',
+  'version' => 'xxx',
   'overwrite.cli.url' => 'http://localhost:32162',
   'installed' => true,
 );
