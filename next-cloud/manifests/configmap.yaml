@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nextcloud-config
+  name: nextcloud-settings
 data:
   config.php : |
     <?php
@@ -30,8 +30,7 @@ data:
       'trusted_domains' => *
       array (
         0 => 'localhost:32162',
-        1 => '*.*.*.*',
-        2 => 'nc.newto.uk',
+        1 => '*',
       ),
       'datadirectory' => '/var/www/html/data',
       'dbtype' => 'sqlite3',
