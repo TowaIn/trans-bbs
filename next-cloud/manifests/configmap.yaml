@@ -27,10 +27,11 @@ data:
       'instanceid' => 'oco7r43z3ek3',
       'passwordsalt' => 'R9NJ1/bFxygeMgV4OQ/u2L+O2lvMYO',
       'secret' => 'MHBQxLqAge4j4yjA/Yxc+7h4BrmyqqAp9QUm8qAZUg55TU3C',
-      'trusted_domains' => 
+      'trusted_domains' => *
       array (
         0 => 'localhost:32162',
-        1 => '*',
+        1 => '*.*.*.*',
+        2 => 'nc.newto.uk',
       ),
       'datadirectory' => '/var/www/html/data',
       'dbtype' => 'sqlite3',

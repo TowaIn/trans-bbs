@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
       - name: open-webui
-        # 公式のコンテナイメージを指定
         image: ghcr.io/open-webui/open-webui:main
         ports:
         - containerPort: 8080

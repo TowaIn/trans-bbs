@@ -1,4 +1,3 @@
-# NextCloudのpvc
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -8,7 +7,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 50Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
